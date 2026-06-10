@@ -3,7 +3,7 @@
 
 #include "clay.h"
 
-#define FONT_ID_BODY_16 0
+#define FONT_ID_BODY_TEXT 0
 
 #define P5_COLOR_RED (Clay_Color) {213, 0, 28, 255}
 #define P5_COLOR_BLACK (Clay_Color) {20, 20, 20, 255}
