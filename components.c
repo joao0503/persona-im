@@ -7,34 +7,36 @@ void MessageBoxComponent (Clay_String messageText) {
         .customData.polygon = {
             .color = P5_COLOR_WHITE,
             .topLeft = {0, 0},
-            .topRight = {0, 20},
-            .bottomLeft = {20, 0},
-            .bottomRight = {-20, -10}
+            .topRight = {28, -12},
+            .bottomLeft = {-25, 0},
+            .bottomRight = {0, 10}
         }
     };
     static CustomLayoutElement messageInnerBox = {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_BLACK,
-            .topLeft = {5, 5},
-            .topRight = {-5, 15},
-            .bottomLeft = {15, -5},
-            .bottomRight = {-15, -5}
+            .topLeft = {0, 0},
+            .topRight = {15, -12},
+            .bottomLeft = {-20, 0},
+            .bottomRight = {0, 10}
         }
     };
 
     CLAY_AUTO_ID({
         .custom = { .customData = &messageOuterBox},
+        .backgroundColor = P5_COLOR_WHITE,
         .layout = {
-            .sizing = {CLAY_SIZING_FIXED(300), CLAY_SIZING_FIXED(100)},
-            .padding = {5, 5, 5, 5},
+            .sizing = {CLAY_SIZING_FIXED(300), CLAY_SIZING_FIXED(80)},
+            .padding = {4, 4, 4, 4},
         },
 
     }){
         CLAY_AUTO_ID({
             .custom = { .customData = &messageInnerBox},
+            .backgroundColor = P5_COLOR_BLACK,
             .layout = {
-                .sizing = {CLAY_SIZING_FIXED(290), CLAY_SIZING_FIXED(90)},
+                .sizing = {CLAY_SIZING_FIXED(290), CLAY_SIZING_FIXED(70)},
                 .padding = {16, 16, 16, 16},
             }
         }){

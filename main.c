@@ -38,7 +38,7 @@ int main() {
         Clay_BeginLayout();
             CLAY(
                 CLAY_ID("Background"), {
-                    // .backgroundColor = P5_COLOR_RED,
+                    .backgroundColor = P5_COLOR_RED,
                     .layout = {
                         .sizing = layoutExpand
                     }   
@@ -53,7 +53,7 @@ int main() {
                         }
                     }
                 ){
-                    MessageBoxComponent(CLAY_STRING("Hello World!"));
+                    MessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."));
                 }
             } 
 
