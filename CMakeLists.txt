@@ -18,7 +18,7 @@ FetchContent_MakeAvailable(raylib)
 
 # Define o executável e inclui os arquivos necessários
 # Se você criar mais arquivos .c (ex: menu.c), adicione-os aqui!
-add_executable(persona main.c)
+add_executable(persona main.c components.c)
 
 # Inclui a pasta raiz para encontrar o clay.h (já que está em ../clay.h)
 target_include_directories(persona PRIVATE ..)

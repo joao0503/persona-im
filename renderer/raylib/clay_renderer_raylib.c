@@ -4,34 +4,14 @@
 #include "string.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "clay_renderer_raylib.h"
 
 #define CLAY_RECTANGLE_TO_RAYLIB_RECTANGLE(rectangle) (Rectangle) { .x = rectangle.x, .y = rectangle.y, .width = rectangle.width, .height = rectangle.height }
 #define CLAY_COLOR_TO_RAYLIB_COLOR(color) (Color) { .r = (unsigned char)roundf(color.r), .g = (unsigned char)roundf(color.g), .b = (unsigned char)roundf(color.b), .a = (unsigned char)roundf(color.a) }
 
-Camera Raylib_camera;
+static Camera Raylib_camera;
 
-typedef enum
-{
-    CUSTOM_LAYOUT_ELEMENT_TYPE_3D_MODEL
-} CustomLayoutElementType;
-
-typedef struct
-{
-    Model model;
-    float scale;
-    Vector3 position;
-    Matrix rotation;
-} CustomLayoutElement_3DModel;
-
-typedef struct
-{
-    CustomLayoutElementType type;
-    union {
-        CustomLayoutElement_3DModel model;
-    } customData;
-} CustomLayoutElement;
-
-const char* overlayShaderCode = "#version 330\n"
+static const char* overlayShaderCode = "#version 330\n"
                                 "\n"
                                 "in vec2 fragTexCoord;\n"
                                 "in vec4 fragColor;\n"
@@ -50,9 +30,9 @@ const char* overlayShaderCode = "#version 330\n"
                                 "    finalColor = vec4(blendedRGB, texelColor.a);\n"
                                 "}";
 
-Shader overlayShader;
-int colorLoc;
-bool overlayEnabled = false;
+static Shader overlayShader;
+static int colorLoc;
+static bool overlayEnabled = false;
 
 void InitOverlay() {
     overlayShader = LoadShaderFromMemory(0, overlayShaderCode);
@@ -297,6 +277,7 @@ void Clay_Raylib_Render(Clay_RenderCommandArray renderCommands, Font* fonts)
             case CLAY_RENDER_COMMAND_TYPE_CUSTOM: {
                 Clay_CustomRenderData *config = &renderCommand->renderData.custom;
                 CustomLayoutElement *customElement = (CustomLayoutElement *)config->customData;
+                
                 if (!customElement) continue;
                 switch (customElement->type) {
                     case CUSTOM_LAYOUT_ELEMENT_TYPE_3D_MODEL: {
@@ -306,6 +287,20 @@ void Clay_Raylib_Render(Clay_RenderCommandArray renderCommands, Font* fonts)
                         BeginMode3D(Raylib_camera);
                             DrawModel(customElement->customData.model.model, positionRay.position, customElement->customData.model.scale * scaleValue, WHITE);        // Draw 3d model with texture
                         EndMode3D();
+                        break;
+                    }
+                    case CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON: {
+                        Clay_Color c = customElement->customData.polygon.color;
+                        CustomLayoutElement_Polygon p = customElement->customData.polygon;
+                        Color rayColor = CLAY_COLOR_TO_RAYLIB_COLOR(c);
+
+                        Vector2 v1 = { boundingBox.x + p.topLeft.x, boundingBox.y + p.topLeft.y };
+                        Vector2 v2 = { boundingBox.x + boundingBox.width + p.topRight.x, boundingBox.y + p.topRight.y };
+                        Vector2 v3 = { boundingBox.x + boundingBox.width + p.bottomRight.x, boundingBox.y + boundingBox.height + p.bottomRight.y };
+                        Vector2 v4 = { boundingBox.x + p.bottomLeft.x, boundingBox.y + boundingBox.height + p.bottomLeft.y };
+
+                        DrawTriangle(v1, v4, v2, rayColor);
+                        DrawTriangle(v2, v4, v3, rayColor);
                         break;
                     }
                     default: break;

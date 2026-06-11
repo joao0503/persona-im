@@ -2,6 +2,7 @@
 #include "clay.h"
 #include "renderer/raylib/clay_renderer_raylib.c"
 #include "headers/persona_theme.h"
+#include "headers/components.h"
 
 void HandleClayErrors(Clay_ErrorData errorData) {
     printf("%s", errorData.errorText.chars);
@@ -21,7 +22,7 @@ int main() {
     (Clay_ErrorHandler) {HandleClayErrors});
 
     Font fonts[10];
-    fonts[FONT_ID_BODY_TEXT] = LoadFontEx("fonts/optima_nova_black.ttf", 16, 0, 400);
+    fonts[FONT_ID_BODY_MESSAGETEXT] = LoadFontEx("fonts/optima_nova_black.ttf", 16, 0, 400);
     Clay_SetMeasureTextFunction(Raylib_MeasureText, fonts);
 
     while (!WindowShouldClose()) {
@@ -36,8 +37,8 @@ int main() {
 
         Clay_BeginLayout();
             CLAY(
-                CLAY_ID("Root"), {
-                    .backgroundColor = P5_COLOR_RED,
+                CLAY_ID("Background"), {
+                    // .backgroundColor = P5_COLOR_RED,
                     .layout = {
                         .sizing = layoutExpand
                     }   
@@ -47,17 +48,12 @@ int main() {
                     CLAY_ID("Content"), {
                         .layout = {
                             .sizing = layoutExpand,
-                            .padding = {16, 16, 16, 16}
+                            .padding = {16, 16, 16, 16},
+                            .childAlignment = {CLAY_ALIGN_X_CENTER, CLAY_ALIGN_Y_CENTER}
                         }
                     }
                 ){
-                    CLAY_TEXT(
-                        CLAY_STRING("Hello World!"), {
-                            .fontSize = 16,
-                            .textColor = P5_COLOR_WHITE,
-                            .fontId = FONT_ID_BODY_TEXT
-                        }
-                    );
+                    MessageBoxComponent(CLAY_STRING("Hello World!"));
                 }
             } 
 
