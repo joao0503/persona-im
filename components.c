@@ -7,7 +7,7 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .customData.polygon = {
             .color = P5_COLOR_WHITE,
             .topLeft = {0, 0}, .topRight = {28, -12},
-            .bottomLeft = {-25, 0}, .bottomRight = {0, 10}
+            .bottomLeft = {-25, 10}, .bottomRight = {0, 20}
         }
     };
     static CustomLayoutElement messageInnerBox = {
@@ -15,7 +15,7 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .customData.polygon = {
             .color = P5_COLOR_BLACK,
             .topLeft = {0, 0}, .topRight = {15, -12},
-            .bottomLeft = {-20, 0}, .bottomRight = {0, 10}
+            .bottomLeft = {-20, 10}, .bottomRight = {0, 20}
         }
     };
 
@@ -23,8 +23,8 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_WHITE,
-            .topLeft = {-22, 14}, .topRight = {-16, 6},
-            .bottomLeft = {-52, 36}, .bottomRight = {-12, 28}
+            .topLeft = {-26, 18}, .topRight = {-24, 6},
+            .bottomLeft = {-56, 40}, .bottomRight = {-16, 32}
         }
     };
 
@@ -32,18 +32,17 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_WHITE,
-            .topLeft = {-38, 26}, .topRight = {2, 8},
-            .bottomLeft = {-34, 48}, .bottomRight = {2, 40}
+            .topLeft = {-40, 30}, .topRight = {-10, 16},
+            .bottomLeft = {-36, 50}, .bottomRight = {-10, 46}
         }
     };
-
 
     static CustomLayoutElement tailInnerBoxLeft = {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_BLACK,
-            .topLeft = {-46, 4}, .topRight = {-36, -4},
-            .bottomLeft = {-62, 16}, .bottomRight = {-32, 8}
+            .topLeft = {-50, 8}, .topRight = {-44, -2},
+            .bottomLeft = {-66, 20}, .bottomRight = {-38, 12}
         }
     };
 
@@ -51,8 +50,8 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_BLACK,
-            .topLeft = {-46, 9}, .topRight = {-16, 1},
-            .bottomLeft = {-42, 24}, .bottomRight = {-16, 16}
+            .topLeft = {-50, 12}, .topRight = {-16, 0},
+            .bottomLeft = {-46, 28}, .bottomRight = {-12, 16}
         }
     };
 
@@ -98,7 +97,7 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
                 }) {}
 
                 CLAY_TEXT(messageText, {
-                    .fontSize = 16,
+                    .fontSize = FONT_SIZE,
                     .textColor = P5_COLOR_WHITE,
                     .fontId = FONT_ID_BODY_MESSAGETEXT,
                 });

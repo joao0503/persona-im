@@ -24,7 +24,7 @@ int main() {
     (Clay_ErrorHandler) {HandleClayErrors});
 
     Font fonts[10];
-    fonts[FONT_ID_BODY_MESSAGETEXT] = LoadFontEx("fonts/optima_nova_black.ttf", 16, 0, 400);
+    fonts[FONT_ID_BODY_MESSAGETEXT] = LoadFontEx("fonts/optima_nova_black.ttf", FONT_SIZE, 0, 400);
     Clay_SetMeasureTextFunction(Raylib_MeasureText, fonts);
 
     while (!WindowShouldClose()) {
