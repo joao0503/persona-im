@@ -69,10 +69,10 @@ int main() {
                             }
                         }
                     ){
-                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."));
-                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."));
-                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."));
-                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."));
+                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."), 1);
+                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."), 2);
+                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."), 3);
+                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."), 4);
                     }
                 }
             }

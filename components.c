@@ -1,7 +1,7 @@
 #include "clay.h"
 #include "headers/persona_theme.h"
 
-void InstantMessageBoxComponent (Clay_String messageText) {
+void InstantMessageBoxComponent (Clay_String messageText, int index) {
     static CustomLayoutElement messageOuterBox = {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
@@ -23,58 +23,115 @@ void InstantMessageBoxComponent (Clay_String messageText) {
         }
     };
 
-    static CustomLayoutElement messageStemWhiteLeft = {
+    static CustomLayoutElement tailOuterBoxLeft = {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_WHITE,
-            .topLeft = {0, 0},
-            .topRight = {0, 0},
-            .bottomLeft = {0, 0},
-            .bottomRight = {0, 0}
+            .topLeft = {20, 0}, .topRight = {0, -8},
+            .bottomLeft = {4, 0}, .bottomRight = {4, -8}
         }
     };
 
-    static CustomLayoutElement messageStemWhiteRight = {
+    static CustomLayoutElement tailOuterBoxRight = {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_WHITE,
-            .topLeft = {0, 0},
-            .topRight = {15, -12},
-            .bottomLeft = {-20, 0},
-            .bottomRight = {0, 10}
+            .topLeft = {0, 0}, .topRight = {0, -8},
+            .bottomLeft = {4, 0}, .bottomRight = {0, -8}
         }
     };
+
+
+    static CustomLayoutElement tailInnerBoxLeft = {
+        .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
+        .customData.polygon = {
+            .color = P5_COLOR_BLACK,
+            .topLeft = {20, 0}, .topRight = {0, -8},
+            .bottomLeft = {4, 0}, .bottomRight = {4, -8}
+        }
+    };
+
+    static CustomLayoutElement tailInnerBoxRight = {
+        .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
+        .customData.polygon = {
+            .color = P5_COLOR_BLACK,
+            .topLeft = {0, 0}, .topRight = {0, -8},
+            .bottomLeft = {4, 0}, .bottomRight = {0, -8}
+        }
+    };
+
 
     CLAY_AUTO_ID({
         .layout = {
             .layoutDirection = CLAY_LEFT_TO_RIGHT,
+            .padding = {0, 0, 32, 0}
         }   
     }){
-        CLAY_AUTO_ID({
-            //.border = {.width = {2, 2, 2, 2, 0}, .color = {0, 0, 255, 255},},
-            .custom = { .customData = &messageStemWhiteLeft},
-            .layout = {
-                .sizing = {CLAY_SIZING_FIXED(20), CLAY_SIZING_FIXED(15),},
-            }
-        }) {
-
-        } 
-        CLAY_AUTO_ID({
-            //.border = {.width = {2, 2, 2, 2, 0}, .color = {0, 0, 255, 255},},
+        CLAY(CLAY_IDI("OuterBubble", index), {
             .custom = { .customData = &messageOuterBox},
             .layout = {
-                .sizing = {CLAY_SIZING_FIXED(300), CLAY_SIZING_FIXED(80)},
+                .sizing = {CLAY_SIZING_FIXED(300), CLAY_SIZING_FIT()},
                 .padding = {4, 4, 4, 4},
             },
         }){
             CLAY_AUTO_ID({
-                //.border = {.width = {2, 2, 2, 2, 0},.color = {0, 255, 0, 255},},
+                .floating = {
+                    .zIndex = -2,
+                    .attachTo = CLAY_ATTACH_TO_ELEMENT_WITH_ID,
+                    .parentId = CLAY_IDI("OuterBubble", index).id,
+                    .attachPoints = { .element = CLAY_ATTACH_POINT_RIGHT_TOP, .parent = CLAY_ATTACH_POINT_LEFT_TOP },
+
+                    .offset = { 0, 15 } 
+                },
+                .layout = { .sizing = { CLAY_SIZING_FIXED(40), CLAY_SIZING_FIXED(20) } },
+                .custom = { .customData = &tailOuterBoxLeft }
+            })
+            CLAY_AUTO_ID({
+                .floating = {
+                    .zIndex = -2,
+                    .attachTo = CLAY_ATTACH_TO_ELEMENT_WITH_ID,
+                    .parentId = CLAY_IDI("OuterBubble", index).id,
+                    .attachPoints = { .element = CLAY_ATTACH_POINT_RIGHT_TOP, .parent = CLAY_ATTACH_POINT_LEFT_TOP },
+
+                    .offset = { 0, 25 },
+                },
+                .layout = { .sizing = { CLAY_SIZING_FIXED(40), CLAY_SIZING_FIXED(20) } },
+                .custom = { .customData = &tailOuterBoxRight }
+            })
+            {}
+            
+            CLAY(CLAY_IDI("InnerBubble", index), {
                 .custom = { .customData = &messageInnerBox},
                 .layout = {
-                    .sizing = {CLAY_SIZING_FIXED(290), CLAY_SIZING_FIXED(70)},
+                    .sizing = {CLAY_SIZING_GROW(), CLAY_SIZING_FIT()},
                     .padding = {16, 16, 16, 16},
                 }
             }){
+                CLAY_AUTO_ID({
+                    .floating = {
+                        .zIndex = 0,
+                        .attachTo = CLAY_ATTACH_TO_ELEMENT_WITH_ID,
+                        .parentId = CLAY_IDI("InnerBubble", index).id,
+                        .attachPoints = { .element = CLAY_ATTACH_POINT_RIGHT_TOP, .parent = CLAY_ATTACH_POINT_LEFT_TOP },
+
+                        .offset = { -20, 20 },
+                    },
+                    .layout = { .sizing = { CLAY_SIZING_FIXED(30), CLAY_SIZING_FIXED(12) } },
+                    .custom = { .customData = &tailInnerBoxLeft }
+                })
+                CLAY_AUTO_ID({
+                    .floating = {
+                        .zIndex = 0,
+                        .attachTo = CLAY_ATTACH_TO_ELEMENT_WITH_ID,
+                        .parentId = CLAY_IDI("InnerBubble", index).id,
+                        .attachPoints = { .element = CLAY_ATTACH_POINT_RIGHT_TOP, .parent = CLAY_ATTACH_POINT_LEFT_TOP },
+
+                        .offset = { 0, 25 },
+                    },
+                    .layout = { .sizing = { CLAY_SIZING_FIXED(30), CLAY_SIZING_FIXED(15) } },
+                    .custom = { .customData = &tailInnerBoxRight }
+                }) {}
+
                 CLAY_TEXT(messageText, {
                     .fontSize = 16,
                     .textColor = P5_COLOR_WHITE,
@@ -83,5 +140,4 @@ void InstantMessageBoxComponent (Clay_String messageText) {
             }
         }
     }
-
 }
