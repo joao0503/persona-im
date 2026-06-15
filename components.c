@@ -27,7 +27,7 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_WHITE,
-            .topLeft = {20, 0}, .topRight = {0, -8},
+            .topLeft = {30, 0}, .topRight = {0, -8},
             .bottomLeft = {4, 0}, .bottomRight = {4, -8}
         }
     };
@@ -36,8 +36,8 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_WHITE,
-            .topLeft = {0, 0}, .topRight = {0, -8},
-            .bottomLeft = {4, 0}, .bottomRight = {0, -8}
+            .topLeft = {0, 0}, .topRight = {0, -16},
+            .bottomLeft = {6, 0}, .bottomRight = {0, -8}
         }
     };
 
@@ -73,35 +73,39 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
                 .sizing = {CLAY_SIZING_FIXED(300), CLAY_SIZING_FIT()},
                 .padding = {4, 4, 4, 4},
             },
+            .floating = {
+                .zIndex = 1,
+            },
         }){
             CLAY_AUTO_ID({
+                .custom = { .customData = &tailOuterBoxLeft },
                 .floating = {
-                    .zIndex = -2,
+                    .zIndex = 0,
                     .attachTo = CLAY_ATTACH_TO_ELEMENT_WITH_ID,
                     .parentId = CLAY_IDI("OuterBubble", index).id,
                     .attachPoints = { .element = CLAY_ATTACH_POINT_RIGHT_TOP, .parent = CLAY_ATTACH_POINT_LEFT_TOP },
-
-                    .offset = { 0, 15 } 
+                    .offset = { -12, 18 } 
                 },
-                .layout = { .sizing = { CLAY_SIZING_FIXED(40), CLAY_SIZING_FIXED(20) } },
-                .custom = { .customData = &tailOuterBoxLeft }
-            })
+                .layout = { .sizing = { CLAY_SIZING_FIXED(40), CLAY_SIZING_FIXED(22) } },
+
+            }) {}
             CLAY_AUTO_ID({
+                .custom = { .customData = &tailOuterBoxRight },
                 .floating = {
-                    .zIndex = -2,
+                    .zIndex = 0,
                     .attachTo = CLAY_ATTACH_TO_ELEMENT_WITH_ID,
                     .parentId = CLAY_IDI("OuterBubble", index).id,
                     .attachPoints = { .element = CLAY_ATTACH_POINT_RIGHT_TOP, .parent = CLAY_ATTACH_POINT_LEFT_TOP },
-
-                    .offset = { 0, 25 },
+                    .offset = { 6, 30 },
                 },
-                .layout = { .sizing = { CLAY_SIZING_FIXED(40), CLAY_SIZING_FIXED(20) } },
-                .custom = { .customData = &tailOuterBoxRight }
-            })
-            {}
+                .layout = { .sizing = { CLAY_SIZING_FIXED(40), CLAY_SIZING_FIXED(22) } },
+            }) {}
             
             CLAY(CLAY_IDI("InnerBubble", index), {
                 .custom = { .customData = &messageInnerBox},
+                .floating = {
+                    .zIndex = 0,
+                },
                 .layout = {
                     .sizing = {CLAY_SIZING_GROW(), CLAY_SIZING_FIT()},
                     .padding = {16, 16, 16, 16},
@@ -113,19 +117,17 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
                         .attachTo = CLAY_ATTACH_TO_ELEMENT_WITH_ID,
                         .parentId = CLAY_IDI("InnerBubble", index).id,
                         .attachPoints = { .element = CLAY_ATTACH_POINT_RIGHT_TOP, .parent = CLAY_ATTACH_POINT_LEFT_TOP },
-
                         .offset = { -20, 20 },
                     },
                     .layout = { .sizing = { CLAY_SIZING_FIXED(30), CLAY_SIZING_FIXED(12) } },
                     .custom = { .customData = &tailInnerBoxLeft }
-                })
+                }) {}
                 CLAY_AUTO_ID({
                     .floating = {
                         .zIndex = 0,
                         .attachTo = CLAY_ATTACH_TO_ELEMENT_WITH_ID,
                         .parentId = CLAY_IDI("InnerBubble", index).id,
                         .attachPoints = { .element = CLAY_ATTACH_POINT_RIGHT_TOP, .parent = CLAY_ATTACH_POINT_LEFT_TOP },
-
                         .offset = { 0, 25 },
                     },
                     .layout = { .sizing = { CLAY_SIZING_FIXED(30), CLAY_SIZING_FIXED(15) } },
