@@ -9,6 +9,7 @@ void HandleClayErrors(Clay_ErrorData errorData) {
 }
 
 int main() {
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(500, 800, "Persona 5 Instant Messaging");
     SetWindowState(FLAG_WINDOW_RESIZABLE);
 
@@ -19,6 +20,7 @@ int main() {
         .width = GetScreenWidth(),
         .height = GetScreenHeight()
     },
+
     (Clay_ErrorHandler) {HandleClayErrors});
 
     Font fonts[10];
@@ -40,22 +42,40 @@ int main() {
                 CLAY_ID("Background"), {
                     .backgroundColor = P5_COLOR_RED,
                     .layout = {
-                        .sizing = layoutExpand
-                    }   
+                        .sizing = layoutExpand,
+                        .padding = CLAY_PADDING_ALL(16),
+                    },
                 }
             ){
                 CLAY(
                     CLAY_ID("Content"), {
                         .layout = {
                             .sizing = layoutExpand,
-                            .padding = {16, 16, 16, 16},
-                            .childAlignment = {CLAY_ALIGN_X_CENTER, CLAY_ALIGN_Y_CENTER}
+                            .padding = {.left = 56},
+                            //.childGap = 40,
+                        },
+                        .border = {
+                            .width = {1, 1, 1, 1, 0},
+                            .color = P5_COLOR_BLACK,
                         }
-                    }
+                    },  
                 ){
-                    MessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."));
+                    CLAY(
+                        CLAY_ID("Instant Message"), {
+                            .layout = {
+                                .layoutDirection = CLAY_TOP_TO_BOTTOM,
+                                .sizing = layoutExpand,
+                                .childAlignment = {CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_TOP},
+                            }
+                        }
+                    ){
+                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."));
+                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."));
+                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."));
+                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."));
+                    }
                 }
-            } 
+            }
 
         Clay_RenderCommandArray renderCommands = Clay_EndLayout(GetFrameTime());
 
