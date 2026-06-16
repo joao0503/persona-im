@@ -6,8 +6,8 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_BLACK,
-            .topLeft = {-20, -20}, .topRight = {30, 12},
-            .bottomLeft = {0, 20}, .bottomRight = {50, 30}
+            .topLeft = {-20, -10}, .topRight = {4, 0},
+            .bottomLeft = {10, 20}, .bottomRight = {24, 6}
         }
     };
 
@@ -15,8 +15,8 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_WHITE,
-            .topLeft = {0, 0}, .topRight = {15, -12},
-            .bottomLeft = {-20, 10}, .bottomRight = {0, 20}
+            .topLeft = {-6, -4}, .topRight = {0, 2},
+            .bottomLeft = {20, 8}, .bottomRight = {14, 2}
         }
     };
 
@@ -24,8 +24,8 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_AVATAR_RYUJI,
-            .topLeft = {0, 0}, .topRight = {15, -12},
-            .bottomLeft = {-20, 10}, .bottomRight = {0, 20}
+            .topLeft = {0, 4}, .topRight = {-4, 4},
+            .bottomLeft = {24, 4}, .bottomRight = {12, -2}
         }
     };
 
@@ -59,8 +59,8 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
             .color = P5_COLOR_WHITE,
-            .topLeft = {-34, 30}, .topRight = {-10, 22},
-            .bottomLeft = {-30, 50}, .bottomRight = {-10, 46}
+            .topLeft = {-38, 36}, .topRight = {-10, 20},
+            .bottomLeft = {-34, 50}, .bottomRight = {-10, 46}
         }
     };
 
@@ -88,21 +88,35 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
         .layout = {
             .layoutDirection = CLAY_LEFT_TO_RIGHT,
             .childAlignment = { .y = CLAY_ALIGN_Y_BOTTOM },
-            .childGap = 50,
+            .childGap = 40,
         }   
     }){
         CLAY(CLAY_IDI("AvatarGroup", index), {
-            .border = { .width = {2, 2, 2, 2, 0}, .color = {0, 255, 0, 255},},
+            //.border = { .width = {1, 1, 1, 1, 0}, .color = {0, 255, 0, 255},},
             .layout = {
-                .sizing = {CLAY_SIZING_FIXED(50), CLAY_SIZING_FIT(50)},
+                .sizing = {CLAY_SIZING_FIXED(80), CLAY_SIZING_FIXED(50)},
             },
         }){
             CLAY_AUTO_ID({
                 .custom = { .customData = &avatarOuterBox },
                 .layout = {
-                    .sizing = {CLAY_SIZING_GROW(), CLAY_SIZING_FIT()},
+                    .sizing = {CLAY_SIZING_GROW(), CLAY_SIZING_GROW()},
                 },
-            }) {}
+            }) {
+                    CLAY_AUTO_ID({
+                    .custom = { .customData = &avatarInnerBox },
+                    .layout = {
+                        .sizing = {CLAY_SIZING_GROW(), CLAY_SIZING_GROW()},
+                    },
+                }) {
+                        CLAY_AUTO_ID({
+                        .custom = { .customData = &avatarInnerColor },
+                        .layout = {
+                            .sizing = {CLAY_SIZING_GROW(), CLAY_SIZING_GROW()},
+                        },
+                    }) {}
+                }
+            }
         }
 
         CLAY(CLAY_IDI("MessageGroup", index), {

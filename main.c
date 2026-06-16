@@ -62,16 +62,14 @@ int main() {
                         CLAY_ID("Instant Message"), {
                             .layout = {
                                 .layoutDirection = CLAY_TOP_TO_BOTTOM,
-                                .sizing = layoutExpand,
+                                .sizing = layoutExpand, 
                                 .childAlignment = {CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_TOP},
+                                .padding = {32, 32, 32, 32},
                                 .childGap = 52,
                             }
                         }
                     ){
-                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."), 1);
-                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."), 2);
-                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."), 3);
-                        InstantMessageBoxComponent(CLAY_STRING("Hello, you're back, and in one piece."), 4);
+                        InstantMessageBoxComponent(CLAY_STRING("For real!?"), 1);
                     }
                 }
             }
