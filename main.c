@@ -51,8 +51,6 @@ int main() {
                     CLAY_ID("Content"), {
                         .layout = {
                             .sizing = layoutExpand,
-                            .padding = {.left = 56},
-                            //.childGap = 40,
                         },
                         .border = {
                             .width = {1, 1, 1, 1, 0},
@@ -66,6 +64,7 @@ int main() {
                                 .layoutDirection = CLAY_TOP_TO_BOTTOM,
                                 .sizing = layoutExpand,
                                 .childAlignment = {CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_TOP},
+                                .childGap = 52,
                             }
                         }
                     ){
