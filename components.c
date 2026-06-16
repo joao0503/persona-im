@@ -92,7 +92,6 @@ void InstantMessageBoxComponent (Texture2D *avatar, Clay_String messageText, int
         }   
     }){
         CLAY(CLAY_IDI("AvatarGroup", index), {
-            //.border = { .width = {1, 1, 1, 1, 0}, .color = {0, 255, 0, 255},},
             .layout = {
                 .sizing = {CLAY_SIZING_FIXED(80), CLAY_SIZING_FIXED(50)},
             },
@@ -113,24 +112,29 @@ void InstantMessageBoxComponent (Texture2D *avatar, Clay_String messageText, int
                             .custom = { .customData = &avatarInnerColor },
                             .layout = {
                                 .sizing = {CLAY_SIZING_GROW(), CLAY_SIZING_GROW()},
-                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER,},
                             },
-                        }) {
-                            if (avatar != NULL) {
-                                CLAY_AUTO_ID({
-                                    .floating = {
-                                        .attachTo = CLAY_ATTACH_TO_PARENT,
-                                        .attachPoints = { .element = CLAY_ATTACH_POINT_LEFT_BOTTOM, .parent = CLAY_ATTACH_POINT_LEFT_BOTTOM },
-                                        .offset = {0, 20},
-                                        .zIndex = 2,
-                                    },
-                                    .aspectRatio = {(float)avatar->width / (float)avatar->height},
-                                    .layout = { .sizing = {CLAY_SIZING_FIXED(110), CLAY_SIZING_FIXED(110)}, },
-                                    .image = { .imageData = avatar }
-                                }) {}
-                            }   
-                        }   
+                        }) {}   
                     }
+            }
+            if (avatar != NULL) {
+                CLAY_AUTO_ID({
+                    .floating = {
+                        .attachTo = CLAY_ATTACH_TO_PARENT,
+                        .attachPoints = { .element = CLAY_ATTACH_POINT_LEFT_BOTTOM, .parent = CLAY_ATTACH_POINT_LEFT_BOTTOM },
+                        .offset = {-20, 10},
+                        .zIndex = 2,
+                    },
+                    .layout = { 
+                        .sizing = {CLAY_SIZING_FIXED(150), CLAY_SIZING_FIXED(100)}, 
+                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_BOTTOM }
+                    },
+                    .clip = { .vertical = true }
+                }) {
+                    CLAY_AUTO_ID({
+                        .layout = { .sizing = {CLAY_SIZING_FIXED(100), CLAY_SIZING_FIXED(100)} },
+                        .image = { .imageData = avatar }
+                    }) {}
+                }
             }
         }
 
