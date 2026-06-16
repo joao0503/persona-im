@@ -1,7 +1,7 @@
 #include "clay.h"
 #include "headers/persona_theme.h"
 
-void InstantMessageBoxComponent (Clay_String messageText, int index) {
+void InstantMessageBoxComponent (Texture2D *avatar, Clay_String messageText, int index) {
     static CustomLayoutElement avatarOuterBox = {
         .type = CUSTOM_LAYOUT_ELEMENT_TYPE_POLYGON,
         .customData.polygon = {
@@ -96,7 +96,7 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
             .layout = {
                 .sizing = {CLAY_SIZING_FIXED(80), CLAY_SIZING_FIXED(50)},
             },
-        }){
+        }) {
             CLAY_AUTO_ID({
                 .custom = { .customData = &avatarOuterBox },
                 .layout = {
@@ -104,18 +104,33 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
                 },
             }) {
                     CLAY_AUTO_ID({
-                    .custom = { .customData = &avatarInnerBox },
-                    .layout = {
-                        .sizing = {CLAY_SIZING_GROW(), CLAY_SIZING_GROW()},
-                    },
-                }) {
-                        CLAY_AUTO_ID({
-                        .custom = { .customData = &avatarInnerColor },
+                        .custom = { .customData = &avatarInnerBox },
                         .layout = {
                             .sizing = {CLAY_SIZING_GROW(), CLAY_SIZING_GROW()},
                         },
-                    }) {}
-                }
+                    }) {
+                        CLAY_AUTO_ID({
+                            .custom = { .customData = &avatarInnerColor },
+                            .layout = {
+                                .sizing = {CLAY_SIZING_GROW(), CLAY_SIZING_GROW()},
+                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER,},
+                            },
+                        }) {
+                            if (avatar != NULL) {
+                                CLAY_AUTO_ID({
+                                    .floating = {
+                                        .attachTo = CLAY_ATTACH_TO_PARENT,
+                                        .attachPoints = { .element = CLAY_ATTACH_POINT_LEFT_BOTTOM, .parent = CLAY_ATTACH_POINT_LEFT_BOTTOM },
+                                        .offset = {0, 20},
+                                        .zIndex = 2,
+                                    },
+                                    .aspectRatio = {(float)avatar->width / (float)avatar->height},
+                                    .layout = { .sizing = {CLAY_SIZING_FIXED(110), CLAY_SIZING_FIXED(110)}, },
+                                    .image = { .imageData = avatar }
+                                }) {}
+                            }   
+                        }   
+                    }
             }
         }
 
@@ -167,6 +182,6 @@ void InstantMessageBoxComponent (Clay_String messageText, int index) {
                     });
                 }
             }
-        } 
-    }
+        }
+    } 
 }

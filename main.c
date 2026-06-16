@@ -4,6 +4,8 @@
 #include "headers/persona_theme.h"
 #include "headers/components.h"
 
+Texture2D icons[1];
+
 void HandleClayErrors(Clay_ErrorData errorData) {
     printf("%s", errorData.errorText.chars);
 }
@@ -12,6 +14,8 @@ int main() {
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(500, 800, "Persona 5 Instant Messaging");
     SetWindowState(FLAG_WINDOW_RESIZABLE);
+
+    icons[0] = LoadTexture("icons/P5_Ryuji_Sakamoto_IM_Icon.png");
 
     uint64_t clayRequiredMemory = Clay_MinMemorySize();
     Clay_Arena clayMemory = Clay_CreateArenaWithCapacityAndMemory(clayRequiredMemory, malloc(clayRequiredMemory));
@@ -69,7 +73,7 @@ int main() {
                             }
                         }
                     ){
-                        InstantMessageBoxComponent(CLAY_STRING("For real!?"), 1);
+                        InstantMessageBoxComponent(&icons[0], CLAY_STRING("For real!?"), 1);
                     }
                 }
             }
